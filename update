@@ -32,10 +32,11 @@ def download_vimorg():
         u = urlopen(url)
         filename = u.info().get_filename()
         print('vim.org: ' + url)
-        print('Downloading ' + filename + 'into ' + filepath)
-        with open(filename,'wb') as f:
+        print('Downloading ' + filename + ' into ' + filepath)
+        # FIXME: use os.path.join
+        with open(filepath+'/'+filename,'wb') as f:
             f.write(u.read())
         u.close()
 
-#git_clone()
+git_clone()
 download_vimorg()
