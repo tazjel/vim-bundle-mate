@@ -1,0 +1,10 @@
+Script to automatically update your scripts in ~/.vim/bundle directory.
+Following a KISS principle there are no external config files. All scripts u need are defined internally - in the update script file.
+
+prerequisites:
+    vim
+    python
+
+usage:
+    1. edit 'update' file and define the scripts u need
+    2. simply run ./update or python update
