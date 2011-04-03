@@ -3,8 +3,12 @@ Following a KISS principle there are no external config files. All scripts u nee
 
 prerequisites:
     vim
-    python
+    python 3.2
 
 usage:
     1. edit 'update' file and define the scripts u need
     2. simply run ./update or python update
+
+supported:
+    1. git repos
+    2. *.vim and *.zip files on www.vim.org

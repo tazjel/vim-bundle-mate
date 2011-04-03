@@ -3,8 +3,9 @@
 
 from subprocess import Popen
 from urllib.request import urlopen
-from os import makedirs
-from zipfile import ZipFile, extractall
+from os import makedirs, unlink
+from shutil import rmtree
+from zipfile import ZipFile
 
 # git
 # repository, plugin name
@@ -20,18 +21,28 @@ vimorg = (
 def git_clone():
     global git
     for arg in git:
-        # FIXME: use os.path.join
-        cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
-        Popen(cmd, shell=True).communicate()
+        # first, remove existent dir
+        try:
+            # FIXME: use os.path.join
+            rmtree('bundle/'+arg[1])
+            print('removed dir: '+'bundle/'+arg[1])
+        except OSError as oserr:
+            print('OSError: {0}'.format(oserr))
+        else:
+            # FIXME: use os.path.join
+            cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
+            Popen(cmd, shell=True).communicate()
+            print()
 
 def download_vimorg():
     global vimorg
     for arg in vimorg:
+        # TODO: remove old dir or file
         # FIXME: use os.path.join
         if arg[2] == 'zip':
-            filepath = 'bundle/' + arg[0] + '/' + arg[2]
-        else:
             filepath = 'bundle/' + arg[0]
+        else:
+            filepath = 'bundle/' + arg[0] + '/' + arg[2]
         makedirs(filepath, exist_ok=True)
         url = "http://www.vim.org/scripts/download_script.php?src_id=" + arg[1]
         u = urlopen(url)
@@ -47,7 +58,11 @@ def download_vimorg():
         # check file type and do additional actions
         if arg[2] == 'zip':
             with ZipFile(fullpath, 'r') as myzip:
+                print('Extracting archive...')
                 myzip.extractall(filepath)
+            unlink(fullpath)
 
-#git_clone()
+        print()
+
+git_clone()
 download_vimorg()
