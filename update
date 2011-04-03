@@ -1,5 +1,41 @@
-#!/usb/bin/env python
+#!/usr/bin/env python
 # -*- coding: utf-8 -*-
-# vim: ft=python
 
+from subprocess import Popen, PIPE
+from urllib.request import urlopen, urlretrieve
+from os import makedirs
 
+# git
+# repository, plugin name
+git = (
+        ('https://github.com/msanders/snipmate.vim.git','snipmate'),
+      )
+# plugin name, src_id, directory
+vimorg = (
+        ('python-complete','10872','autoload'),
+      )
+
+def git_clone():
+    global git
+    for arg in git:
+        # FIXME: use os.path.join
+        cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
+        Popen(cmd, shell=True).communicate()
+
+def download_vimorg():
+    global vimorg
+    for arg in vimorg:
+        # FIXME: use os.path.join
+        filepath = 'bundle/' + arg[0] + '/' + arg[2]
+        makedirs(filepath, exist_ok=True)
+        url = "http://www.vim.org/scripts/download_script.php?src_id=" + arg[1]
+        u = urlopen(url)
+        filename = u.info().get_filename()
+        print('vim.org: ' + url)
+        print('Downloading ' + filename + 'into ' + filepath)
+        with open(filename,'wb') as f:
+            f.write(u.read())
+        u.close()
+
+#git_clone()
+download_vimorg()
