@@ -60,6 +60,8 @@ def download_vimorg():
             with ZipFile(fullpath, 'r') as myzip:
                 print('Extracting archive...')
                 myzip.extractall(filepath)
+                # extractall doesn't return a value
+                print('Done.')
             unlink(fullpath)
 
         print()
