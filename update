@@ -35,6 +35,12 @@ def git_clone():
     # FIXME: use os.path.join
     cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
     Popen(cmd, shell=True).communicate()
+    print('removing .git folder for', 'bundle/'+arg[1])
+    try:
+        # FIXME: use os.path.join
+        rmtree('bundle/'+arg[1]+'.git')
+    except OSError:
+        pass
     print()
 
 def download_vimorg():
