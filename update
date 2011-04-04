@@ -5,7 +5,7 @@
 
 import re
 import gzip
-from subprocess import Popen
+from subprocess import Popen, PIPE
 from urllib.request import urlopen
 from os import makedirs, unlink, path
 from shutil import rmtree
@@ -52,16 +52,16 @@ def git_clone():
             print('removed dir: '+'bundle/'+arg[1])
         except OSError:
             pass
-    # FIXME: use os.path.join
-    cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
-    Popen(cmd, shell=True).communicate()
-    print('removing .git folder for', 'bundle/'+arg[1])
-    try:
         # FIXME: use os.path.join
-        rmtree('bundle/'+arg[1]+'/.git')
-    except OSError:
-        pass
-    print()
+        cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
+        Popen(cmd, shell=True).communicate()
+        print('removing .git folder for', 'bundle/'+arg[1])
+        try:
+            # FIXME: use os.path.join
+            rmtree('bundle/'+arg[1]+'/.git')
+        except OSError:
+            pass
+        print()
 
 def download_vimorg():
     global vimorg
@@ -137,4 +137,4 @@ def download_vimorg():
         print()
 
 git_clone()
-download_vimorg()
+#download_vimorg()
