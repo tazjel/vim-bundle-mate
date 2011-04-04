@@ -14,24 +14,32 @@ from zipfile import ZipFile
 # git
 # repository, plugin name
 git = (
-        #('https://github.com/msanders/snipmate.vim.git','snipmate'),
-#http://github.com/scrooloose/nerdcommenter.git nerd-commenter
-#http://github.com/scrooloose/nerdtree.git nerd-tree
-#http://github.com/tpope/vim-surround.git surround
-#http://github.com/tpope/vim-repeat.git vim-repeat
-#http://github.com/Raimondi/delimitMate.git delimit-mate
-#http://github.com/tpope/vim-fugitive.git fugitive
-#http://github.com/tpope/vim-git.git vim-git
+        ('https://github.com/msanders/snipmate.vim.git','snipmate'),
+        ('https://github.com/scrooloose/nerdcommenter.git','nerd-commenter'),
+        ('https://github.com/scrooloose/nerdtree.git','nerd-tree'),
+        ('https://github.com/tpope/vim-surround.git','surround'),
+        ('https://github.com/tpope/vim-repeat.git','vim-repeat'),
+        ('https://github.com/Raimondi/delimitMate.git','delimit-mate'),
+        ('https://github.com/tpope/vim-fugitive.git','fugitive'),
+        ('https://github.com/tpope/vim-git.git','vim-git'),
+        ('https://github.com/vim-scripts/FuzzyFinder.git','fuzzy-finder'),
+        ('https://github.com/vim-scripts/mru.vim.git','mru'),
+        ('https://github.com/vim-scripts/Rainbow-Parenthesis.git','rainbow-parenthesis'),
       )
 # plugin name, src_id, type/directory [zip, vba, module name, colors, etc]
 vimorg = (
-        #('python-complete','10872','autoload'),
-        #('buffer-explorer','14208','zip'),
-        #('supertab-continued','15029','vba'),
-        #('draw-it','8798','vba'),
+        ('python-complete','10872','autoload'),
+        ('buffer-explorer','14208','zip'),
+        ('supertab-continued','15029','vba'),
+        ('draw-it','8798','vba'),
         ('auto-compl-pop','11894','zip'),
         ('match-it','8196','zip'),
         ('bufexplorer','14208','zip'),
+        ('makrs-browser','6408','plugin'),
+        ('indexed-search','7062','plugin'),
+        ('tag-list','7701','zip'),
+        ('show-marks','3342','plugin'),
+        ('yankring','13554','zip'),
       )
 
 def git_clone():
