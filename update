@@ -35,6 +35,7 @@ def git_clone():
         else:
             # FIXME: use os.path.join
             cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
+            print(cmd)
             Popen(cmd, shell=True).communicate()
             print()
 
@@ -63,7 +64,7 @@ def download_vimorg():
         # zip
         if arg[2] == 'zip':
             with ZipFile(fullpath, 'r') as myzip:
-                print('Extracting archive...')
+                print('Extracting zip archive...')
                 myzip.extractall(filepath)
                 # extractall doesn't return a value
                 print('Done.')
@@ -71,6 +72,7 @@ def download_vimorg():
         # vimball
         elif arg[2] == 'vba':
             # extract vimball
+            print('Extracting vimball...')
             with open(fullpath, 'r') as vba:
                 content = vba.readlines()
                 header = ''.join(content[0:3])
@@ -82,13 +84,15 @@ def download_vimorg():
                     if matches:
                         vba_filename = path.basename(matches.group(1))
                         vba_filepath = path.join(filepath, path.dirname(matches.group(1)))
-                        vba_fullpath = path.join(filepath, filename)
+                        vba_fullpath = path.join(vba_filepath, vba_filename)
+                        print(vba_filename, vba_filepath, vba_fullpath)
                         linecount = int(next(it))
                         print(vba_fullpath + ':', linecount, 'lines')
                         makedirs(vba_filepath, exist_ok=True)
                         with open(vba_fullpath, 'w') as f:
                             f.writelines(content[i+shift:i+shift+linecount])
                         shift += 1
+                print('Done.')
 
         print()
 
