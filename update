@@ -4,6 +4,7 @@
 # https://github.com/jungo-git/vim-bundle-mate
 
 import re
+import gzip
 from subprocess import Popen
 from urllib.request import urlopen
 from os import makedirs, unlink, path
@@ -20,6 +21,7 @@ vimorg = (
         ('python-complete','10872','autoload'),
         ('buffer-explorer','14208','zip'),
         ('supertab-continued','15029','vba'),
+        ('draw-it','8798','vba'),
       )
 
 def git_clone():
@@ -75,6 +77,19 @@ def download_vimorg():
             unlink(fullpath)
         # vimball
         elif arg[2] == 'vba':
+            # if vimball compressed with gzip
+            if path.splitext(filename)[1] == '.gz':
+                print('Extracting gzipped vimball...')
+                with gzip.open(fullpath, 'rb') as f:
+                    filename = path.splitext(filename)[0]
+                    gz_fullpath = fullpath
+                    fullpath = path.splitext(fullpath)[0]
+                    with open(fullpath, 'wb') as d:
+                        d.write(f.read())
+                    print('Done.')
+                    # delete .gz file
+                    unlink(gz_fullpath)
+                    print('Deleted', gz_fullpath)
             # extract vimball
             print('Extracting vimball...')
             with open(fullpath, 'r') as vba:
@@ -86,10 +101,10 @@ def download_vimorg():
                 for i, line in enumerate(it):
                     matches = re.match('^(.*?)\t\[\[\[1$', line)
                     if matches:
+                        # vba_xxx is current file in vimball archive
                         vba_filename = path.basename(matches.group(1))
                         vba_filepath = path.join(filepath, path.dirname(matches.group(1)))
                         vba_fullpath = path.join(vba_filepath, vba_filename)
-                        print(vba_filename, vba_filepath, vba_fullpath)
                         linecount = int(next(it))
                         print(vba_fullpath + ':', linecount, 'lines')
                         makedirs(vba_filepath, exist_ok=True)
@@ -97,6 +112,9 @@ def download_vimorg():
                             f.writelines(content[i+shift:i+shift+linecount])
                         shift += 1
                 print('Done.')
+            # delete .vba file
+            unlink(fullpath)
+            print('Deleted', fullpath)
 
         print()
 
