@@ -4,6 +4,7 @@ Following a KISS principle there are no external config files. All scripts u nee
 prerequisites:
     vim
     python 3.2
+    git
 
 usage:
     1. edit 'update' file and define the scripts u need

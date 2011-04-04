@@ -2,3 +2,5 @@ vim/
 pathogenized/
 plugins.idnt
 bundle/
+*.vba
+parse
