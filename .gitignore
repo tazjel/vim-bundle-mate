@@ -1,6 +1,3 @@
 vim/
-pathogenized/
-plugins.idnt
+*.idnt
 bundle/
-*.vba
-parse

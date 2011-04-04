@@ -14,3 +14,6 @@ supported:
     1. git repos
     2. *.vim and *.zip files on www.vim.org
     3. vimball archive (*.vba and *.vba.gz)
+
+todo:
+    1. auto download newest plugin version from vim.org

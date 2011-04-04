@@ -14,14 +14,24 @@ from zipfile import ZipFile
 # git
 # repository, plugin name
 git = (
-        ('https://github.com/msanders/snipmate.vim.git','snipmate'),
+        #('https://github.com/msanders/snipmate.vim.git','snipmate'),
+#http://github.com/scrooloose/nerdcommenter.git nerd-commenter
+#http://github.com/scrooloose/nerdtree.git nerd-tree
+#http://github.com/tpope/vim-surround.git surround
+#http://github.com/tpope/vim-repeat.git vim-repeat
+#http://github.com/Raimondi/delimitMate.git delimit-mate
+#http://github.com/tpope/vim-fugitive.git fugitive
+#http://github.com/tpope/vim-git.git vim-git
       )
-# plugin name, src_id, type/directory
+# plugin name, src_id, type/directory [zip, vba, module name, colors, etc]
 vimorg = (
-        ('python-complete','10872','autoload'),
-        ('buffer-explorer','14208','zip'),
-        ('supertab-continued','15029','vba'),
-        ('draw-it','8798','vba'),
+        #('python-complete','10872','autoload'),
+        #('buffer-explorer','14208','zip'),
+        #('supertab-continued','15029','vba'),
+        #('draw-it','8798','vba'),
+        ('auto-compl-pop','11894','zip'),
+        ('match-it','8196','zip'),
+        ('bufexplorer','14208','zip'),
       )
 
 def git_clone():
