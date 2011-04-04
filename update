@@ -38,7 +38,7 @@ def git_clone():
     print('removing .git folder for', 'bundle/'+arg[1])
     try:
         # FIXME: use os.path.join
-        rmtree('bundle/'+arg[1]+'.git')
+        rmtree('bundle/'+arg[1]+'/.git')
     except OSError:
         pass
     print()
