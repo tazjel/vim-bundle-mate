@@ -137,4 +137,4 @@ def download_vimorg():
         print()
 
 git_clone()
-#download_vimorg()
+download_vimorg()
