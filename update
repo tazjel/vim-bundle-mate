@@ -30,8 +30,8 @@ def git_clone():
             # FIXME: use os.path.join
             rmtree('bundle/'+arg[1])
             print('removed dir: '+'bundle/'+arg[1])
-        except OSError as oserr:
-            print('OSError: {0}'.format(oserr))
+        except OSError:
+            pass
         else:
             # FIXME: use os.path.join
             cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
@@ -71,7 +71,7 @@ def download_vimorg():
         # vimball
         elif arg[2] == 'vba':
             # extract vimball
-            with open(filename, 'r') as vba:
+            with open(fullpath, 'r') as vba:
                 content = vba.readlines()
                 header = ''.join(content[0:3])
 
@@ -84,7 +84,6 @@ def download_vimorg():
                         vba_filepath = path.join(filepath, path.dirname(matches.group(1)))
                         vba_fullpath = path.join(filepath, filename)
                         linecount = int(next(it))
-                        print('Vimball files:')
                         print(vba_fullpath + ':', linecount, 'lines')
                         makedirs(vba_filepath, exist_ok=True)
                         with open(vba_fullpath, 'w') as f:
