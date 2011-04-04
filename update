@@ -32,12 +32,10 @@ def git_clone():
             print('removed dir: '+'bundle/'+arg[1])
         except OSError:
             pass
-        else:
-            # FIXME: use os.path.join
-            cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
-            print(cmd)
-            Popen(cmd, shell=True).communicate()
-            print()
+    # FIXME: use os.path.join
+    cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
+    Popen(cmd, shell=True).communicate()
+    print()
 
 def download_vimorg():
     global vimorg
