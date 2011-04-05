@@ -47,16 +47,16 @@ def git_clone():
     for arg in git:
         # first, remove existent dir
         try:
-            path = path.join('bundle', arg[1])
-            rmtree(path)
-            print('Removed dir:', path)
+            gitpath = path.join('bundle', arg[1])
+            rmtree(gitpath)
+            print('Removed old dir:', gitpath)
         except OSError:
             pass
-        cmd = 'git clone ' + arg[0] + ' ' + path
+        cmd = 'git clone ' + arg[0] + ' ' + gitpath
         Popen(cmd, shell=True).communicate()
-        print('Removing .git folder in', path)
+        print('Removing .git folder in', gitpath)
         try:
-            rmtree(path.join(path, '.git'))
+            rmtree(path.join(gitpath, '.git'))
         except OSError:
             pass
         print()
@@ -65,6 +65,13 @@ def download_vimorg():
     global vimorg
     for arg in vimorg:
         # TODO: remove old dir
+        # remove old dir
+        try:
+            oldpath = path.join('bundle', arg[0])
+            rmtree(oldpath)
+            print('Removed old dir:', oldpath)
+        except OSError:
+            pass
         if arg[2] == 'zip' or arg[2] == 'vba':
             filepath = path.join('bundle', arg[0])
         else:
