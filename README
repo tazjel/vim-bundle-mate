@@ -1,14 +1,18 @@
 Script to automatically update your scripts in ~/.vim/bundle directory.
 Following a KISS principle there are no external config files. All scripts u need are defined internally - in the update script file.
+If you want to use your own plugins, just place them in 'bundle/pluginname' dir and do not include plugin name into 'update' file to not to overwrite it while update.
+
+In future releases i'm planning to add an option to auto update your vim.org plugins from site. Script will parse vim.org plugin page and find the latest version, download it and install.
 
 prerequisites:
-    vim
-    python 3.2
     git
+    vim 7
+    pathogen plugin to vim
+    python 3.2
 
 usage:
-    1. edit 'update' file and define the scripts u need
-    2. simply run ./update or python update
+    1. edit 'update' file and define plugins u need
+    2. simply run ./update or python ~/.vim/update
 
 supported:
     1. git repos
