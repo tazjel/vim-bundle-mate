@@ -41,7 +41,7 @@ vimorg = (
         ('show-marks','3342','plugin'),
         ('yankring','13554','zip'),
         ('error-marker','14142','plugin'),
-        ('zenburn','14111','colors'),
+        ('zenburn','14111','vba'),
         ('vim-a','7218','plugin'),
         ('rst-tables-unicode','14999','plugin'),
         ('command-t','15305','vba'), #cd command-t/ruby/command-t; ruby extconf.rb; make
