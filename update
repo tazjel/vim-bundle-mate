@@ -47,18 +47,16 @@ def git_clone():
     for arg in git:
         # first, remove existent dir
         try:
-            # FIXME: use os.path.join
-            rmtree('bundle/'+arg[1])
-            print('removed dir: '+'bundle/'+arg[1])
+            path = path.join('bundle', arg[1])
+            rmtree(path)
+            print('Removed dir:', path)
         except OSError:
             pass
-        # FIXME: use os.path.join
-        cmd = 'git clone ' + arg[0] + ' bundle/' + arg[1]
+        cmd = 'git clone ' + arg[0] + ' ' + path
         Popen(cmd, shell=True).communicate()
-        print('removing .git folder for', 'bundle/'+arg[1])
+        print('Removing .git folder in', path)
         try:
-            # FIXME: use os.path.join
-            rmtree('bundle/'+arg[1]+'/.git')
+            rmtree(path.join(path, '.git'))
         except OSError:
             pass
         print()
@@ -66,20 +64,18 @@ def git_clone():
 def download_vimorg():
     global vimorg
     for arg in vimorg:
-        # TODO: remove old dir or file
-        # FIXME: use os.path.join
+        # TODO: remove old dir
         if arg[2] == 'zip' or arg[2] == 'vba':
-            filepath = 'bundle/' + arg[0]
+            filepath = path.join('bundle', arg[0])
         else:
-            filepath = 'bundle/' + arg[0] + '/' + arg[2]
+            filepath = path.join('bundle', arg[0], arg[2])
         makedirs(filepath, exist_ok=True)
-        url = "http://www.vim.org/scripts/download_script.php?src_id=" + arg[1]
+        url = 'http://www.vim.org/scripts/download_script.php?src_id=' + arg[1]
         u = urlopen(url)
         filename = u.info().get_filename()
-        # FIXME: use os.path.join
-        fullpath = filepath + '/' + filename
+        fullpath = path.join(filepath, filename)
         print('vim.org: ' + url)
-        print('Downloading ' + filename + ' into ' + filepath)
+        print('Downloading', filename, 'into', filepath)
         with open(fullpath,'wb') as f:
             f.write(u.read())
         u.close()
