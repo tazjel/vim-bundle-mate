@@ -46,6 +46,7 @@ vimorg = (
         ('rst-tables-unicode','14999','plugin'),
         ('command-t','15305','vba'), #cd command-t/ruby/command-t; ruby extconf.rb; make
         ('vim-outliner','5768','zip'),
+        ('vim-l9-library','13948','zip'),
       )
 
 def git_clone():
