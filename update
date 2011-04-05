@@ -26,7 +26,7 @@ git = (
         ('https://github.com/vim-scripts/mru.vim.git','mru'),
         ('https://github.com/vim-scripts/Rainbow-Parenthesis.git','rainbow-parenthesis'),
       )
-# plugin name, src_id, type/directory [zip, vba, module name, colors, etc]
+# plugin dir name, src_id, type = [zip, vba, folder to copy to]
 vimorg = (
         ('python-complete','10872','autoload'),
         ('buffer-explorer','14208','zip'),
@@ -40,6 +40,10 @@ vimorg = (
         ('tag-list','7701','zip'),
         ('show-marks','3342','plugin'),
         ('yankring','13554','zip'),
+        ('error-marker','14142','plugin'),
+        ('zenburn','14111','colors'),
+        ('vim-a','7218','plugin'),
+        ('rst-tables-unicode','14999','plugin'),
       )
 
 def git_clone():
