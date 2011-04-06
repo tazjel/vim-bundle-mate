@@ -1,3 +1,6 @@
+This is the development version of the script.
+Currently i'm implementing auto-update vim.org plugin feature.
+
 Script to automatically update your scripts in ~/.vim/bundle directory.
 Following a KISS principle there are no external config files. All scripts u need are defined internally - in the update script file.
 If you want to use your own plugins, just place them in 'bundle/pluginname' dir and do not include plugin name into 'update' file to not to overwrite it while update.
