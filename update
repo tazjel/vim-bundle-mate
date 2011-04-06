@@ -186,5 +186,5 @@ def get_latest_file(url):
     latest_url = latest.get('href')
     return latest_filename, 'http://www.vim.org/scripts/' + latest_url
 
-#git_clone()
+git_clone()
 download_vimorg()

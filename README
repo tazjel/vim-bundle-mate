@@ -1,18 +1,13 @@
-This is the development version of the script.
-Currently i'm implementing auto-update vim.org plugin feature.
-
 Script to automatically update your scripts in ~/.vim/bundle directory.
 Following a KISS principle there are no external config files. All scripts u need are defined internally - in the update script file.
 If you want to use your own plugins, just place them in 'bundle/pluginname' dir and do not include plugin name into 'update' file to not to overwrite it while update.
-
-In future releases i'm planning to add an option to auto update your vim.org plugins from site. Script will parse vim.org plugin page and find the latest version, download it and install.
 
 prerequisites:
     git
     vim 7
     pathogen plugin to vim
     python 3.2
-    lxml for python 3.2 (python3-lxml in archlinux)
+    lxml for python 3.2 (python3-lxml in archlinux) - only if you want to receive latest plugin versions
 
 usage:
     1. edit 'update' file and define plugins u need
@@ -24,7 +19,6 @@ supported:
     3. vimball archive (*.vba and *.vba.gz)
 
 todo:
-    1. auto download newest plugin version from vim.org
-    2. add post install hook, so user can define any actions he want to do after installation
-    3. add support for tar archives
-    4. add support for bzr, mercurial, svn
+    1. add post install hook, so user can define any actions he want to do after installation
+    2. add support for tar archives
+    3. add support for bzr, mercurial, svn
