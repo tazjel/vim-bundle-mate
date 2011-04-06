@@ -5,6 +5,7 @@
 
 import re
 import gzip
+from lxml import html
 from subprocess import Popen, PIPE
 from urllib.request import urlopen
 from os import makedirs, unlink, path
@@ -28,7 +29,8 @@ git = (
       )
 # plugin dir name, src_id, type = [zip, vba, folder to copy to]
 vimorg = (
-        ('python-complete','10872','autoload'),
+        #('python-complete','10872','autoload'), # not and auto update
+        ('python-complete','1542','auto/autoload'), # auto update
         ('buffer-explorer','14208','zip'),
         ('supertab-continued','15029','vba'),
         ('draw-it','8798','vba'),
@@ -147,5 +149,14 @@ def download_vimorg():
 
         print()
 
-git_clone()
-download_vimorg()
+def get_latest_file(url):
+    u = urlopen(url)
+    doc = html.document_fromstring(u.read())
+    latest = [tag for tag in doc.cssselect('a') if 'download_script.php?src_id' in tag.get('href')][0]
+    latest_filename = latest.text
+    latest_url = latest.get('href')
+    return latest_filename, latest_url
+
+#git_clone()
+#download_vimorg()
+get_latest_file()

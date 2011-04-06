@@ -12,6 +12,7 @@ prerequisites:
     vim 7
     pathogen plugin to vim
     python 3.2
+    lxml for python 3.2 (python3-lxml in archlinux)
 
 usage:
     1. edit 'update' file and define plugins u need
