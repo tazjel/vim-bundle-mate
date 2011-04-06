@@ -15,11 +15,13 @@ from zipfile import ZipFile
 
 # git {{{
 # repository, plugin name
+# third parameter is optional: user command list to execute after plugin install
+# must be a list type: ['cmd 1','cmd 2','cmd 3']
 git = (
         ('https://github.com/msanders/snipmate.vim.git','snipmate'),
         ('https://github.com/scrooloose/nerdcommenter.git','nerd-commenter'),
         ('https://github.com/scrooloose/nerdtree.git','nerd-tree'),
-        ('https://github.com/tpope/vim-surround.git','surround'),
+        ('https://github.com/tpope/vim-surround.git','surround',['touch surround.txt']),
         ('https://github.com/tpope/vim-repeat.git','vim-repeat'),
         ('https://github.com/Raimondi/delimitMate.git','delimit-mate'),
         ('https://github.com/tpope/vim-fugitive.git','fugitive'),
@@ -40,6 +42,8 @@ git = (
 # }}}
 # plugins to download from vim.org {{{
 # i want latest plugins, so i use auto
+# four parameter is optional: user command list to execute after plugin install
+# must be a list type: ['cmd 1','cmd 2','cmd 3']
 vimorg = (
         ('python-complete','1542','auto/autoload'),
         ('buffer-explorer','42','auto/zip'),
@@ -78,6 +82,11 @@ def git_clone():
         try:
             rmtree(path.join(gitpath, '.git'))
         except OSError:
+            pass
+        # try to execute user-defined commands
+        try:
+            post_install(arg[2])
+        except IndexError:
             pass
         print()
 
