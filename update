@@ -21,7 +21,7 @@ git = (
         ('https://github.com/msanders/snipmate.vim.git','snipmate'),
         ('https://github.com/scrooloose/nerdcommenter.git','nerd-commenter'),
         ('https://github.com/scrooloose/nerdtree.git','nerd-tree'),
-        ('https://github.com/tpope/vim-surround.git','surround',['touch surround.txt']),
+        ('https://github.com/tpope/vim-surround.git','surround'),
         ('https://github.com/tpope/vim-repeat.git','vim-repeat'),
         ('https://github.com/Raimondi/delimitMate.git','delimit-mate'),
         ('https://github.com/tpope/vim-fugitive.git','fugitive'),
