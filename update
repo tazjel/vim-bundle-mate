@@ -12,7 +12,7 @@ from os import makedirs, unlink, path
 from shutil import rmtree
 from zipfile import ZipFile
 
-# git
+# git {{{
 # repository, plugin name
 git = (
         ('https://github.com/msanders/snipmate.vim.git','snipmate'),
@@ -23,34 +23,43 @@ git = (
         ('https://github.com/Raimondi/delimitMate.git','delimit-mate'),
         ('https://github.com/tpope/vim-fugitive.git','fugitive'),
         ('https://github.com/tpope/vim-git.git','vim-git'),
-        ('https://github.com/vim-scripts/FuzzyFinder.git','fuzzy-finder'),
         ('https://github.com/vim-scripts/mru.vim.git','mru'),
         ('https://github.com/vim-scripts/Rainbow-Parenthesis.git','rainbow-parenthesis'),
       )
+# }}}
+# comment {{{
 # plugin dir name, src_id, type = [zip, vba, folder to copy to]
+# to enable auto update:
+#   1. second argument must be an script_id
+#   2. third argument must be started with 'auto/'
+#   example: link is http://www.vim.org/scripts/script.php?script_id=1542
+#   so, second argument is 1542
+#   REMEMBER: auto => script_id
+#             else => src_id
+# }}}
+# plugins to download from vim.org {{{
+# i want latest plugins, so i use auto
 vimorg = (
-        #('python-complete','10872','autoload'), # not and auto update
-        ('python-complete','1542','auto/autoload'), # auto update
-        ('buffer-explorer','14208','zip'),
-        ('supertab-continued','15029','vba'),
-        ('draw-it','8798','vba'),
-        ('auto-compl-pop','11894','zip'),
-        ('match-it','8196','zip'),
-        ('bufexplorer','14208','zip'),
-        ('makrs-browser','6408','plugin'),
-        ('indexed-search','7062','plugin'),
-        ('tag-list','7701','zip'),
-        ('show-marks','3342','plugin'),
-        ('yankring','13554','zip'),
-        ('error-marker','14142','plugin'),
-        ('zenburn','14111','vba'),
-        ('vim-a','7218','plugin'),
-        ('rst-tables-unicode','14999','plugin'),
-        ('command-t','15305','vba'), #cd command-t/ruby/command-t; ruby extconf.rb; make
-        ('vim-outliner','5768','zip'),
-        ('vim-l9-library','13948','zip'),
-        ('vim-opengl','7583','syntax'),
+        ('python-complete','1542','auto/autoload'),
+        ('buffer-explorer','42','auto/zip'),
+        ('supertab-continued','1643','auto/vba'),
+        ('draw-it','40','auto/vba'),
+        ('auto-compl-pop','1879','auto/zip'),
+        ('match-it','39','auto/zip'),
+        ('marks-browser','1706','auto/plugin'),
+        ('indexed-search','1682','auto/plugin'),
+        ('tag-list','273','auto/zip'),
+        ('show-marks','152','auto/plugin'),
+        ('yankring','1234','auto/zip'),
+        ('error-marker','1861','auto/plugin'),
+        ('zenburn','415','auto/vba'),
+        ('vim-a','31','auto/plugin'),
+        ('rst-tables-unicode','3450','auto/plugin'),
+        ('command-t','3025','auto/vba'), #cd command-t/ruby/command-t; ruby extconf.rb; make
+        ('vim-outliner','517','auto/zip'),
+        ('vim-opengl','752','auto/syntax'),
       )
+# }}}
 
 def git_clone():
     global git
@@ -74,7 +83,6 @@ def git_clone():
 def download_vimorg():
     global vimorg
     for arg in vimorg:
-        # TODO: remove old dir
         # remove old dir
         try:
             oldpath = path.join('bundle', arg[0])
@@ -82,14 +90,32 @@ def download_vimorg():
             print('Removed old dir:', oldpath)
         except OSError:
             pass
-        if arg[2] == 'zip' or arg[2] == 'vba':
+        # check if need to auto update
+        if 'auto/' in arg[2]:
+            auto = True
+            plugin_type = arg[2][5:]
+            filename, url = get_latest_file('http://www.vim.org/scripts/script.php?script_id=' + arg[1])
+            # some error happened
+            if filename == 'Error!' and url == 'Wrong script_id?':
+                print('!!! Error downloading', arg[0]+'!','Maybe wring script_id? !!!')
+                print()
+                continue
+        else:
+            auto = False
+            plugin_type = arg[2]
+            url = 'http://www.vim.org/scripts/download_script.php?src_id=' + arg[1]
+        # open url
+        u = urlopen(url)
+        # if auto we already got a filename
+        if not auto:
+            filename = u.info().get_filename()
+        # check if file is archive
+        if plugin_type == 'zip' or plugin_type == 'vba':
             filepath = path.join('bundle', arg[0])
         else:
-            filepath = path.join('bundle', arg[0], arg[2])
+            filepath = path.join('bundle', arg[0], plugin_type)
+        # make directories
         makedirs(filepath, exist_ok=True)
-        url = 'http://www.vim.org/scripts/download_script.php?src_id=' + arg[1]
-        u = urlopen(url)
-        filename = u.info().get_filename()
         fullpath = path.join(filepath, filename)
         print('vim.org: ' + url)
         print('Downloading', filename, 'into', filepath)
@@ -99,7 +125,7 @@ def download_vimorg():
 
         # check file type and do additional actions
         # zip
-        if arg[2] == 'zip':
+        if plugin_type == 'zip':
             with ZipFile(fullpath, 'r') as myzip:
                 print('Extracting zip archive...')
                 myzip.extractall(filepath)
@@ -107,7 +133,7 @@ def download_vimorg():
                 print('Done.')
             unlink(fullpath)
         # vimball
-        elif arg[2] == 'vba':
+        elif plugin_type == 'vba':
             # if vimball compressed with gzip
             if path.splitext(filename)[1] == '.gz':
                 print('Extracting gzipped vimball...')
@@ -152,11 +178,13 @@ def download_vimorg():
 def get_latest_file(url):
     u = urlopen(url)
     doc = html.document_fromstring(u.read())
-    latest = [tag for tag in doc.cssselect('a') if 'download_script.php?src_id' in tag.get('href')][0]
+    try:
+        latest = [tag for tag in doc.cssselect('a') if 'download_script.php?src_id' in tag.get('href')][0]
+    except IndexError:
+        return 'Error!', 'Wrong script_id?'
     latest_filename = latest.text
     latest_url = latest.get('href')
-    return latest_filename, latest_url
+    return latest_filename, 'http://www.vim.org/scripts/' + latest_url
 
 #git_clone()
-#download_vimorg()
-get_latest_file()
+download_vimorg()
