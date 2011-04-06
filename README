@@ -22,3 +22,5 @@ supported:
 todo:
     1. auto download newest plugin version from vim.org
     2. add post install hook, so user can define any actions he want to do after installation
+    3. add support for tar archives
+    4. add support for bzr, mercurial, svn
