@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 # vim-bundle-mate script by jungo
 # https://github.com/jungo-git/vim-bundle-mate
+# version 1.0
 
 import re
 import gzip
@@ -55,7 +56,7 @@ vimorg = (
         ('zenburn','415','auto/vba'),
         ('vim-a','31','auto/plugin'),
         ('rst-tables-unicode','3450','auto/plugin'),
-        ('command-t','3025','auto/vba'), #cd command-t/ruby/command-t; ruby extconf.rb; make
+        ('command-t','3025','auto/vba',['cd bundle/command-t/ruby/command-t/','ruby extconf.rb','make']),
         ('vim-outliner','517','auto/zip'),
         ('vim-opengl','752','auto/syntax'),
       )
@@ -174,6 +175,12 @@ def download_vimorg():
             print('Deleted', fullpath)
 
         print()
+        # try to execute user-defined commands
+        try:
+            post_install(arg[3])
+        except IndexError:
+            pass
+        print()
 
 def get_latest_file(url):
     u = urlopen(url)
@@ -185,6 +192,12 @@ def get_latest_file(url):
     latest_filename = latest.text
     latest_url = latest.get('href')
     return latest_filename, 'http://www.vim.org/scripts/' + latest_url
+
+def post_install(commands):
+    print('Executing post install commands...')
+    cmd = ';'.join(commands)
+    Popen(cmd, shell=True).communicate()
+
 
 git_clone()
 download_vimorg()
