@@ -20,5 +20,6 @@ supported:
 
 todo:
     1. add post install hook, so user can define any actions he want to do after installation
-    2. add support for tar archives
+    2. add support for tar, tar.gz archives
     3. add support for bzr, mercurial, svn
+    4. code refactoring
