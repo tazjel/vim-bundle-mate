@@ -72,7 +72,6 @@ def git_clone():
 def download_vimorg():
     global vimorg
     for arg in vimorg:
-        # TODO: remove old dir
         # remove old dir
         try:
             oldpath = path.join('bundle', arg[0])
