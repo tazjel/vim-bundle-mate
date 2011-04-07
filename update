@@ -58,7 +58,6 @@ vimorg = (
         ('vim-a','31','auto/plugin'),
         ('rst-tables-unicode','3450','auto/plugin'),
         ('command-t','3025','auto/vba',['cd bundle/command-t/ruby/command-t/','ruby extconf.rb','make']),
-        ('vim-outliner','517','auto/zip'),
         ('vim-opengl','752','auto/syntax'),
       )
 # }}}
