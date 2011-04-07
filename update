@@ -52,7 +52,6 @@ vimorg = (
         ('match-it','39','auto/zip'),
         ('indexed-search','1682','auto/plugin'),
         ('tag-list','273','auto/zip'),
-        ('yankring','1234','auto/zip'),
         ('error-marker','1861','auto/plugin'),
         ('zenburn','415','auto/vba'),
         ('vim-a','31','auto/plugin'),
