@@ -27,7 +27,6 @@ git = (
         ('https://github.com/tpope/vim-fugitive.git','fugitive'),
         ('https://github.com/tpope/vim-git.git','vim-git'),
         ('https://github.com/vim-scripts/mru.vim.git','mru'),
-        ('https://github.com/vim-scripts/Rainbow-Parenthesis.git','rainbow-parenthesis'),
       )
 # }}}
 # comment {{{
@@ -51,10 +50,8 @@ vimorg = (
         ('draw-it','40','auto/vba'),
         ('auto-compl-pop','1879','auto/zip'),
         ('match-it','39','auto/zip'),
-        ('marks-browser','1706','auto/plugin'),
         ('indexed-search','1682','auto/plugin'),
         ('tag-list','273','auto/zip'),
-        ('show-marks','152','auto/plugin'),
         ('yankring','1234','auto/zip'),
         ('error-marker','1861','auto/plugin'),
         ('zenburn','415','auto/vba'),
