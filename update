@@ -58,6 +58,8 @@ vimorg = (
         ('rst-tables-unicode','3450','auto/plugin'),
         ('command-t','3025','auto/vba',['cd bundle/command-t/ruby/command-t/','ruby extconf.rb','make']),
         ('vim-opengl','752','auto/syntax'),
+        ('rainbow-parenthesis','1230','auto/plugin'),
+        ('vim-pep8','2914','auto/ftplugin/python'),
       )
 # }}}
 
@@ -96,6 +98,7 @@ def download_vimorg():
         except OSError:
             pass
         # check if need to auto update
+        # FIXME: use arg[2].startswith('auto/')
         if 'auto/' in arg[2]:
             auto = True
             plugin_type = arg[2][5:]
