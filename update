@@ -7,7 +7,7 @@
 import re
 import gzip
 from lxml import html
-from subprocess import Popen, PIPE
+from subprocess import Popen
 from urllib.request import urlopen
 from os import makedirs, unlink, path
 from shutil import rmtree
@@ -56,10 +56,12 @@ vimorg = (
         ('zenburn','415','auto/vba'),
         ('vim-a','31','auto/plugin'),
         ('rst-tables-unicode','3450','auto/plugin'),
-        ('command-t','3025','auto/vba',['cd bundle/command-t/ruby/command-t/','ruby extconf.rb','make']),
+        ('command-t','3025','auto/vba',
+            ['cd bundle/command-t/ruby/command-t/','ruby extconf.rb','make']),
         ('vim-opengl','752','auto/syntax'),
         ('rainbow-parenthesis','1230','auto/plugin'),
         ('vim-pep8','2914','auto/ftplugin/python'),
+        ('vim-pyflakes','2441','auto/zip'),
       )
 # }}}
 
@@ -102,10 +104,12 @@ def download_vimorg():
         if 'auto/' in arg[2]:
             auto = True
             plugin_type = arg[2][5:]
-            filename, url = get_latest_file('http://www.vim.org/scripts/script.php?script_id=' + arg[1])
+            filename, url = get_latest_file(
+                   'http://www.vim.org/scripts/script.php?script_id=' + arg[1])
             # some error happened
             if filename == 'Error!' and url == 'Wrong script_id?':
-                print('!!! Error downloading', arg[0]+'!','Maybe wring script_id? !!!')
+                print('!!! Error downloading', arg[0]+'!',
+                        'Maybe wring script_id? !!!')
                 print()
                 continue
         else:
@@ -159,7 +163,6 @@ def download_vimorg():
             print('Extracting vimball...')
             with open(fullpath, 'r') as vba:
                 content = vba.readlines()
-                header = ''.join(content[0:3])
 
                 it = iter(content)
                 shift = 2
