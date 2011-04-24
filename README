@@ -20,6 +20,7 @@ supported:
     3. vimball archive (*.vba and *.vba.gz)
 
 todo:
-    2. add support for tar, tar.gz archives
-    3. add support for bzr, mercurial, svn
-    4. code refactoring
+    >1. add current downloading plugin version support, so the newest files will not be downloaded again
+    >2. add support for tar, tar.gz archives
+    >3. add support for bzr, mercurial, svn
+    >4. code refactoring

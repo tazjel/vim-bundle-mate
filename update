@@ -62,6 +62,7 @@ vimorg = (
         ('rainbow-parenthesis','1230','auto/plugin'),
         ('vim-pep8','2914','auto/ftplugin/python'),
         ('vim-pyflakes','2441','auto/zip'),
+        ('omnicppcomplete','1520','auto/zip'),
       )
 # }}}
 
