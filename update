@@ -27,6 +27,8 @@ git = (
         ('https://github.com/tpope/vim-fugitive.git','fugitive'),
         ('https://github.com/tpope/vim-git.git','vim-git'),
         ('https://github.com/vim-scripts/mru.vim.git','mru'),
+        ('https://github.com/fs111/pydoc.vim.git','pydoc'),
+        ('https://github.com/altercation/vim-colors-solarized.git','vim-colors-solarized'),
       )
 # }}}
 # comment {{{
@@ -63,6 +65,7 @@ vimorg = (
         ('vim-pep8','2914','auto/ftplugin/python'),
         ('vim-pyflakes','2441','auto/zip'),
         ('omnicppcomplete','1520','auto/zip'),
+        ('jinja2-syntax','1856','auto/syntax'),
       )
 # }}}
 
