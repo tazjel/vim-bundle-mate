@@ -8,14 +8,14 @@ After each plugin install the script will run commands, which you define as an o
 
 ####version 1.1:
 code refactoring
-git clone now users `--depth=1` option to perform faster download
+git clone now uses `--depth=1` option to perform faster download
 
 ###prerequisites:
-git  
-vim 7  
-pathogen plugin to vim  
-python 3.2  
-lxml for python 3.2 (python3-lxml in archlinux) - only if you want to receive latest plugin versions  
+* git  
+* vim 7  
+* pathogen plugin to vim  
+* python 3.2  
+* lxml for python 3.2 (python3-lxml in archlinux) - only if you want to receive latest plugin versions  
 
 ###usage:
 1. edit 'update' file and define plugins u need
