@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 # vim-bundle-mate script by jungo
 # https://github.com/jungo-git/vim-bundle-mate
-# version 1.0
+# version 1.1
 
 import re
 import gzip
@@ -34,7 +34,7 @@ git = (
 # comment {{{
 # plugin dir name, src_id, type = [zip, vba, folder to copy to]
 # to enable auto update:
-#   1. second argument must be an script_id
+#   1. second argument must be a script_id
 #   2. third argument must be started with 'auto/'
 #   example: link is http://www.vim.org/scripts/script.php?script_id=1542
 #   so, second argument is 1542
@@ -69,53 +69,77 @@ vimorg = (
       )
 # }}}
 
+def remove_dir(path):
+    try:
+        rmtree(path)
+        print('Removed dir:', path)
+    except OSError:
+        pass
+
+def get_latest_file(url):
+    """ parses url and returns latest file name and link
+    to file on vim.org
+    """
+    u = urlopen(url)
+    doc = html.document_fromstring(u.read())
+    try:
+        latest = [tag for tag in doc.cssselect('a') if 'download_script.php?src_id' in tag.get('href')][0]
+    except IndexError:
+        return None, None
+    latest_filename = latest.text
+    latest_url = latest.get('href')
+    return latest_filename, 'http://www.vim.org/scripts/' + latest_url
+
+def post_install(lst, index):
+    try:
+        commands = lst[index]
+    except IndexError:
+        pass
+    else:
+        print('Executing post install commands...')
+        cmd = ';'.join(commands)
+        Popen(cmd, shell=True).communicate()
+    print()
+
 def git_clone():
+    """ clone git repositories """
     global git
     for arg in git:
+        # arg[0] -> repository link
+        # arg[1] -> plugin directory name (in bundle/)
+
         # first, remove existent dir
-        try:
-            gitpath = path.join('bundle', arg[1])
-            rmtree(gitpath)
-            print('Removed old dir:', gitpath)
-        except OSError:
-            pass
-        cmd = 'git clone ' + arg[0] + ' ' + gitpath
+        gitpath = path.join('bundle', arg[1])
+        remove_dir(gitpath)
+        # clone shell command
+        cmd = 'git clone --depth=1 ' + arg[0] + ' ' + gitpath
         Popen(cmd, shell=True).communicate()
-        print('Removing .git folder in', gitpath)
-        try:
-            rmtree(path.join(gitpath, '.git'))
-        except OSError:
-            pass
-        # try to execute user-defined commands
-        try:
-            post_install(arg[2])
-        except IndexError:
-            pass
-        print()
+        # remove .git folder in newly cloned repo
+        remove_dir(path.join(gitpath, '.git'))
+        # execute user-defined commands
+        post_install(arg, 2)
 
 def download_vimorg():
     global vimorg
     for arg in vimorg:
         # remove old dir
-        try:
-            oldpath = path.join('bundle', arg[0])
-            rmtree(oldpath)
-            print('Removed old dir:', oldpath)
-        except OSError:
-            pass
+        oldpath = path.join('bundle', arg[0])
+        remove_dir(oldpath)
         # check if need to auto update
-        # FIXME: use arg[2].startswith('auto/')
-        if 'auto/' in arg[2]:
+        # if 'auto/' in arg[2]:
+        if arg[2].startswith('auto/'):
             auto = True
             plugin_type = arg[2][5:]
             filename, url = get_latest_file(
-                   'http://www.vim.org/scripts/script.php?script_id=' + arg[1])
+               'http://www.vim.org/scripts/script.php?script_id=' + arg[1])
             # some error happened
-            if filename == 'Error!' and url == 'Wrong script_id?':
+            if filename is None:
                 print('!!! Error downloading', arg[0]+'!',
-                        'Maybe wring script_id? !!!')
+                        'Maybe wrong script_id?')
                 print()
+                # stop downloading and iterate next argument
                 continue
+        # we don't want to auto update and given an src_id
         else:
             auto = False
             plugin_type = arg[2]
@@ -133,8 +157,9 @@ def download_vimorg():
         # make directories
         makedirs(filepath, exist_ok=True)
         fullpath = path.join(filepath, filename)
-        print('vim.org: ' + url)
+        print('www.vim.org: ' + url)
         print('Downloading', filename, 'into', filepath)
+        # download file
         with open(fullpath,'wb') as f:
             f.write(u.read())
         u.close()
@@ -145,8 +170,8 @@ def download_vimorg():
             with ZipFile(fullpath, 'r') as myzip:
                 print('Extracting zip archive...')
                 myzip.extractall(filepath)
-                # extractall doesn't return a value
                 print('Done.')
+            # delete .zip file
             unlink(fullpath)
         # vimball
         elif plugin_type == 'vba':
@@ -189,29 +214,8 @@ def download_vimorg():
             print('Deleted', fullpath)
 
         print()
-        # try to execute user-defined commands
-        try:
-            post_install(arg[3])
-        except IndexError:
-            pass
-        print()
-
-def get_latest_file(url):
-    u = urlopen(url)
-    doc = html.document_fromstring(u.read())
-    try:
-        latest = [tag for tag in doc.cssselect('a') if 'download_script.php?src_id' in tag.get('href')][0]
-    except IndexError:
-        return 'Error!', 'Wrong script_id?'
-    latest_filename = latest.text
-    latest_url = latest.get('href')
-    return latest_filename, 'http://www.vim.org/scripts/' + latest_url
-
-def post_install(commands):
-    print('Executing post install commands...')
-    cmd = ';'.join(commands)
-    Popen(cmd, shell=True).communicate()
-
+        # execute user-defined commands
+        post_install(arg, 3)
 
 git_clone()
 download_vimorg()
