@@ -29,17 +29,30 @@ git = (
         ('https://github.com/vim-scripts/mru.vim.git','mru'),
         ('https://github.com/fs111/pydoc.vim.git','pydoc'),
         ('https://github.com/altercation/vim-colors-solarized.git','vim-colors-solarized'),
+        # very buggy
+        #('https://github.com/klen/python-mode.git','python-mode'),
       )
 # }}}
 # comment {{{
-# plugin dir name, src_id, type = [zip, vba, folder to copy to]
-# to enable auto update:
-#   1. second argument must be a script_id
-#   2. third argument must be started with 'auto/'
-#   example: link is http://www.vim.org/scripts/script.php?script_id=1542
-#   so, second argument is 1542
-#   REMEMBER: auto => script_id
-#             else => src_id
+#
+# HAND MODE:
+# ('python.vim','12804','syntax')
+#   - python.vim is plugin directory name
+#   - 12804 is src_id
+#   - syntax is the type of the plugin
+# so, the install path will be:
+#   - bundle/python.vim/syntax/<plugin_name.vim>
+#
+# AUTO MODE:
+# ('python-complete','1542','auto/autoload'),
+# enables auto update (gets latest plugin version):
+#   - python-complete is plugin directory name
+#   - 1542 is script_id
+#   - third argument must be started with 'auto/'
+#     example: link is http://www.vim.org/scripts/script.php?script_id=1542
+#     so, second argument is 1542
+# REMEMBER: auto => script_id
+#           else => src_id
 # }}}
 # plugins to download from vim.org {{{
 # i want latest plugins, so i use auto
@@ -66,6 +79,11 @@ vimorg = (
         ('vim-pyflakes','2441','auto/zip'),
         ('omnicppcomplete','1520','auto/zip'),
         ('jinja2-syntax','1856','auto/syntax'),
+        ('django-highlight','1487','auto/syntax'),
+        #('python-ifold','2002','auto/zip',
+           #['cd bundle/python-ifold/', 'mkdir ftplugin', 'cd ftplugin',
+               #'mv ../python_ifold.b.vim .']),
+        ('python.vim','12804','syntax'), # not auto, src_id
       )
 # }}}
 
